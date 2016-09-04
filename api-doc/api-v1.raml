@@ -1,0 +1,155 @@
+#%RAML 1.0
+title: SupShop 项目 API 文档
+version: v1
+baseUri: http://api.sup-shop.jackon.me/{version}
+mediaType: application/json
+protocols: HTTP
+
+types:
+  TripBrief:
+    type: object
+    properties:
+      id: string
+      title: string
+      start_at:
+        type: date-only # no implications about time or offset
+        example: 2016-09-23
+      duration: string
+      location: string
+      total_count: number
+      sell_count: number
+      available_cnt: number
+      price: number
+      avatar_url: string
+  Trips:
+    type: TripBrief[]
+  TrainingBrief:
+    type: object
+    properties:
+      id: string
+      title: string
+      mode: string
+      start_at:
+        type: date-only # no implications about time or offset
+        example: 2016-09-23
+      location: string
+      lessons_number: number
+      total_count: number
+      sell_count: number
+      available_cnt: number
+      price: number
+      avatar_url: string
+  Trainings:
+    type: TrainingBrief[]
+  EquipmentBrief:
+    type: object
+    properties:
+      id: string
+      title: string
+      colors: string[]
+      price: number
+      avatar_url: string
+  Equipments:
+    type: EquipmentBrief[]
+
+/trips:
+  displayName: trip-list
+  description: 路线列表，暂不支持增删改操作。
+  get:
+    description: 获取路线列表。返回 trip list
+    responses:
+      200:
+        body:
+          example: |
+            [
+              {"id": 1, "title": "菲律宾皮划艇体验", "start_at": "2016.09.27", "duration": "2 天 1 夜", "location": "上海", "total_count": 20, "sell_count": 8, "available_cnt": 12, "price": 1980, "avatar_url": "/media/trips/avatar/ac8dc3e99d3644af9b974afd5006d06a.png"},
+               {"id": 2, "title": "菲律宾皮划艇体验", "start_at": "2016.11.01", "duration": "1 天", "location": "上海", "total_count": 20, "sell_count": 20, "available_cnt": 0, "price": 2330, "avatar_url": "/media/trips/avatar/ee8dc3e99d3644af9b974afd5006d22b.png"}
+              ]
+
+/trainings:
+  displayName: training-list
+  description: 培训课程列表，暂不支持增删改操作。
+  get:
+    description: 培训课程列表。返回 training list
+    responses:
+      200:
+        body:
+          example: |
+            [
+              {"id": 1, "title": "SupPolo 大师训练课程", "mode": "室外授课", "start_at": "2016.09.27", "lessons_number": 20, "location": "上海", "total_count": 20, "sell_count": 8, "available_cnt": 12, "price": 1980, "avatar_url": "/media/trips/avatar/ac8dc3e99d3644af9b974afd5006d06a.png"},
+              {"id": 2, "title": "桨板球新手入门", "mode": "团体授课", "start_at": "2016.11.01", "lessons_number": 20, "location": "上海", "total_count": 20, "sell_count": 20, "available_cnt": 0, "price": 2330, "avatar_url": "/media/trips/avatar/ee8dc3e99d3644af9b974afd5006d22b.png"}
+            ]
+
+/equipments:
+  displayName: equipment-list
+  description: 装备列表，暂不支持增删改操作。
+  get:
+    description: 装备列表。返回 equipment list
+    responses:
+      200:
+        body:
+          example: |
+            [
+              {"id": 1, "title": "Nalsh 护腕", "colors": ["red", "yellow", "green"], "price": 1980, "avatar_url": "/media/trips/avatar/ac8dc3e99d3644af9b974afd5006d06a.png"},
+              {"id": 2, "title": "Wallaman S-I 桨板", "colors": ["red"], "price": 2330, "avatar_url": "/media/trips/avatar/ee8dc3e99d3644af9b974afd5006d22b.png"}
+            ]
+
+/filters/trips:
+  displayName: filters-trips
+  description: trips 的过滤器
+  get:
+    description: 获取 trips 的过滤器
+    responses:
+      200:
+        body:
+          example: |
+            [
+              {
+                "key": "Category",
+                "display": "线路类型",
+                "choices": [
+                  {"id": 0, "display": "不限"},
+                  {"id": 1, "display": "kayak独木舟"},
+                  {"id": 2, "display": "canoe划艇"},
+                  {"id": 3, "display": "sup桨板"},
+                  {"id": 4, "display": "帆板"},
+                  {"id": 5, "display": "OP小帆船"},
+                  {"id": 6, "display": "帆船"},
+                  {"id": 7, "display": "冲浪"},
+                  {"id": 8, "display": "风筝冲浪"},
+                  {"id": 9, "display": "赛艇"},
+                  {"id": 10, "display": "SUP POLO"},
+                  {"id": 11, "display": "KAKAY POLO"}
+                ]
+              },
+              {
+                "key": "level",
+                "display": "难度系数",
+                "choices": [
+                  {"id": 0, "display": "不限"},
+                  {"id": 1, "display": "一星"},
+                  {"id": 2, "display": "二星"},
+                  {"id": 3, "display": "三星"},
+                  {"id": 4, "display": "四星"},
+                  {"id": 5, "display": "五星"}
+                ]
+              },
+              {
+                "key": "client-age",
+                "display": "适宜人群－年龄",
+                "choices": [
+                  {"id": 0, "display": "不限"},
+                  {"id": 1, "display": "6 岁以下"},
+                  {"id": 2, "display": "65 岁以上"}
+                ]
+              },
+              {
+                "key": "client-gender",
+                "display": "适宜人群－性别",
+                "choices": [
+                  {"id": 0, "display": "不限"},
+                  {"id": 1, "display": "男"},
+                  {"id": 2, "display": "女"}
+                ]
+              }
+            ]
