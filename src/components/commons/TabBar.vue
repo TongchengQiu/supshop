@@ -46,6 +46,7 @@ export default {
         width: 33.333%;
         height: px2rem(44px);
         a {
+          height: 100%;
           text-align: center;
           display: block;
           font-size: 15px;
